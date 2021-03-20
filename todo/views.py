@@ -4,11 +4,10 @@ from django.shortcuts import render
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,renderer_classes,parser_classes
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
-from rest_framework.mixins import ListModelMixin , CreateModelMixin 
+#from rest_framework.mixin import 
+from rest_framework.generics import RetrieveUpdateDestroyAPIView,ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import JSONParser
-from rest_framework.renderers import BrowsableAPIRenderer
 
 from allauth.socialaccount.models import SocialAccount,SocialToken
 from django.contrib.auth.models import User
@@ -16,8 +15,9 @@ from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 
 from .serializers import EventSerializer,Event
+from .utils import connect_to_calendar
 
-SCOPES = ['https://www.googleapis.com/auth/calendar']
+
 
 # Create your views here.
 @api_view(['GET'])
@@ -26,11 +26,30 @@ def welcome(request):
 
 
 
+
+
+class CreateCalendarAPI(ListCreateAPIView):
+    queryset=Event.objects.all()
+    serializer_class=EventSerializer
+
+
+    def perform_create(self,serializer):
+        serializer.is_valid(raise_exception=True)
+        serializer.save(request=self.request)
+
+
+class ModifyCalendarAPI(RetrieveUpdateDestroyAPIView):
+    serializer_class=EventSerializer
+    queryset=Event.objects.all()
+    
+
+        
+
+'''
 @api_view(['GET'])
 def get_calendar_events(request):
     qs=SocialAccount.objects.filter(user=request.user)
     token=SocialToken.objects.filter(account=qs[0]).values('token')
-    print
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
     creds = Credentials(token[0]['token'],SCOPES )
     service = build('calendar', 'v3', credentials=creds)
@@ -43,19 +62,9 @@ def get_calendar_events(request):
     return Response(events)
 
 
-@renderer_classes([BrowsableAPIRenderer])
-@api_view(['POST'])
-def add_calendar_events(request):
-    serializer=EventSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    event=serializer.save(request=request)
-    print(event)    
-    return Response(event)
-
-
 @api_view(['DELETE'])
 def delete_calendar_events(request,pk):
-    event=Event.objects.filter(id=pk)
+    event=Event.objects.all().values('id')
     qs=SocialAccount.objects.filter(user=request.user)
     token=SocialToken.objects.filter(account=qs[0]).values('token')
     creds = Credentials(token[0]['token'],SCOPES )
@@ -66,7 +75,7 @@ def delete_calendar_events(request,pk):
 
 
 
-'''
+
     qs=SocialAccount.objects.filter(user=request.user)
     token=SocialToken.objects.filter(account=qs[0]).values('token')
     print(token)

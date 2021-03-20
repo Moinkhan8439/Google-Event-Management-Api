@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path,include
-from .views import welcome,get_calendar_events,add_calendar_events,delete_calendar_events
+from .views import welcome,CreateCalendarAPI,ModifyCalendarAPI
 
 urlpatterns = [
     path('welcome',welcome),
-    path('add',add_calendar_events,name="add event"),
-    path('get',get_calendar_events,name='get list of events'),
-    path('delete',delete_calendar_events,name="Delete event")
+    path('add',CreateCalendarAPI.as_view(),name="add event"),
+    path('get/<int:pk>',ModifyCalendarAPI.as_view(),name='get list of events'),
+    path('delete/<int:pk>',ModifyCalendarAPI.as_view(),name="Delete event")
 ]   

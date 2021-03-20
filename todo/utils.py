@@ -1,3 +1,5 @@
+from datetime import datetime
+import json
 from allauth.socialaccount.models import SocialAccount,SocialToken
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
@@ -13,31 +15,44 @@ def connect_to_calendar(request):
     return service
 
 
+
+
+
+def convert_date(date):
+    d=date.isoformat('T')
+    print(d)
+    return d
+
+
+
 def prepare_event(data):
-    print(data)
+    start=convert_date(data['start_time'])
+    end=convert_date(data['end_time'])
     event = {
         'summary': data['summary'],
         'description': data['description'],
         'start': {
-            'dateTime': '2015-05-28T09:00:00-07:00',
-            'timeZone': 'America/Los_Angeles',
+            'dateTime': start,
+            'timeZone': 'ASIA/KOLKATA',
         },
         'end': {
-            'dateTime': '2015-05-28T17:00:00-07:00',
-            'timeZone': 'America/Los_Angeles',
+            'dateTime': end,
+            'timeZone': 'ASIA/KOLKATA',
         },
         'recurrence': [
             'RRULE:FREQ=DAILY;COUNT=2'
         ],
         'attendees': [
-            {'email': 'lpage@example.com'},
-            {'email': 'sbrin@example.com'},
-        ],
+            {'email': 'moinkhan8439@gmail.com'},
+            {'email': 'zainkhanjune@gmail.com'},
+            ],
         'reminders': {
             'useDefault': False,
             'overrides': [
             {'method': 'email', 'minutes': 24 * 60},
             {'method': 'popup', 'minutes': 10},
             ],
-        },
+        }
     }
+    return json.dumps(event)
+
