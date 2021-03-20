@@ -1,1 +1,7 @@
-adding renderer classes left and update functions left
+done:
+adding events using quickadd
+deleting events 
+getting a particular event
+
+in progress:
+updating the events.
