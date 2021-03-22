@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext,gettext_lazy as _
-from django.db.models.signals import post_save
+
 
 
 
@@ -10,7 +10,8 @@ class Event(models.Model):
     organizer=models.CharField(_("Organizer of event "), max_length=50,blank=True)
     start_time=models.DateTimeField(_("Event start time"), auto_now=False, auto_now_add=False)
     end_time=models.DateTimeField(_("Event end time"), auto_now=False, auto_now_add=False)
-    description=models.CharField(_("Description"), max_length=50)
+    description=models.CharField(_("Description"), max_length=200)
+    attendees=models.CharField(_("Attendees"),default=" " ,max_length=1000,help_text="enter attendees separated by a comma ",blank=True)
 
 
     def __str__(self):
