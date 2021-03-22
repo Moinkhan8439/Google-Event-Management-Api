@@ -14,10 +14,13 @@ from rest_framework.permissions         import  IsAuthenticated
 @api_view(['GET'])
 def api_overview(request):
     Overview={
-        'To get list of Events  REQUEST-TYPE = GET                  '  :                '/get-list/',
-        'Adding an Event  REQUEST-TYPE = POST                       '  :                '/add/',
-        'Detail of single Event  REQUEST-TYPE = GET                 '  :                '/get/<int:pk>/',
-        'Deleting an Event  REQUEST-TYPE = DELETE                   '  :                '/update/<int:pk>/',
+        'Add these endpoints just after base url                    '  :                'https://calendar-assistance.herokuapp.com/',
+        'For login                                                  '  :                'accounts/google/login/',
+        'for logout                                                 '  :                'accounts/google/logout',
+        'To get list of Events  REQUEST-TYPE = GET                  '  :                'get-list/',
+        'Adding an Event  REQUEST-TYPE = POST                       '  :                'add/',
+        'Detail of single Event  REQUEST-TYPE = GET                 '  :                'get/<int:pk>/',
+        'Deleting an Event  REQUEST-TYPE = DELETE                   '  :                'update/<int:pk>/',
         'Updating a single Event REQUEST-TYPE = PUT OR PATCH        '  :                '/delete/<int:pk>/',
     }
     return Response(Overview)
@@ -29,6 +32,7 @@ def api_overview(request):
 class CreateCalendarAPI(ListCreateAPIView):
     queryset=Event.objects.all()
     serializer_class=EventSerializer
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self,serializer):
         serializer.save_as(request=self.request)
@@ -40,6 +44,7 @@ class CreateCalendarAPI(ListCreateAPIView):
 class ModifyCalendarAPI(RetrieveUpdateDestroyAPIView):
     serializer_class=EventSerializer
     queryset=Event.objects.all()
+    permission_classes = [IsAuthenticated]
     
     def perform_update(self,serializer):
         serializer.update_as(request=self.request)
