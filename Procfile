@@ -1,1 +1,1 @@
-web : gunicorn Todogoogle.wsgi
+web: gunicorn Todogoogle.wsgi
