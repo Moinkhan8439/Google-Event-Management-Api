@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['calendar-assistance.herokuapp.com/']
+ALLOWED_HOSTS = ['calendar-assistance.herokuapp.com/','127.0.0.1:8000/']
 
 
 # Application definition
@@ -41,13 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+
+
     'rest_framework',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 
-    'google_site_verification',
 
     'todo.apps.TodoConfig',
 ]
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'Todogoogle.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'template')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,6 +157,6 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-GOOGLE_SITE_VERIFICATION_FILE = "google5d8c1a836e2ba240.html"
+
 
 django_heroku.settings(locals())

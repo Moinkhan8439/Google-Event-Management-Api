@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-
+from .views import verify
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('',include('todo.urls')),
-    GOOGLE_SITE_VERIFICATION_URL
+    path('google5d8c1a836e2ba240.html',verify)
 ]
