@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 
+    'google_site_verification',
+
     'todo.apps.TodoConfig',
 ]
 
@@ -65,7 +67,7 @@ ROOT_URLCONF = 'Todogoogle.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'template')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -153,5 +155,7 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+GOOGLE_SITE_VERIFICATION_FILE = "google5d8c1a836e2ba240.html"
 
 django_heroku.settings(locals())
