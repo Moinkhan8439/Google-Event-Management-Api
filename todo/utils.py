@@ -8,12 +8,14 @@ from django.contrib.auth.models import User
 
 
 
+def time_available(self,request,d1,d2):
+    pass
 
 #Connect to Google Calendar
 def connect_to_calendar(request):
     #Fetches the User of the request
     qs=SocialAccount.objects.filter(user=request.user)
-
+    print(request.user)
     #Fetches the Acces token of the User
     token=SocialToken.objects.filter(account=qs[0]).values('token')
 
