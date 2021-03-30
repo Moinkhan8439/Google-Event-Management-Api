@@ -16,7 +16,7 @@ def api_overview(request):
     Overview={
         'Add these endpoints just after base url                    '  :                'https://calendar-assistance.herokuapp.com/',
         'For login                                                  '  :                'accounts/google/login/',
-        'for logout                                                 '  :                'accounts/google/logout',
+        'for logout                                                 '  :                'accounts/logout/',
         'To get list of Events  REQUEST-TYPE = GET                  '  :                'list/',
         'Adding an Event  REQUEST-TYPE = POST                       '  :                'add/',
         'Detail of single Event  REQUEST-TYPE = GET                 '  :                'get/<int:pk>/',
